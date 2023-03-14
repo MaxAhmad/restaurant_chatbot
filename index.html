@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+      }
+
+      html {
+        font-size: 62.5%;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        color: #333;
+        line-height: 1.5;
+        height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to top left, #28b487, #7dd56f);
+      }
+
+      body div {
+        font-size: 3rem;
+      }
+      .show-items-modal,
+      .show-current-modal,
+      .show-history-modal,
+      .show-cancel-modal,
+      .show-checkout-modal {
+        font-size: 2rem;
+        font-weight: 600;
+        padding: 1rem 3.5rem;
+        margin: 2rem 2rem;
+        border: none;
+        background-color: #fff;
+        color: #444;
+        border-radius: 10rem;
+        cursor: pointer;
+      }
+
+      .place-order {
+        font-size: 2rem;
+        font-weight: 600;
+        padding: 1rem 3.5rem;
+        margin: 2rem 2rem;
+        border: none;
+        background-color: #7dd56f;
+        color: #fff;
+        border-radius: 10rem;
+      }
+
+      .close-modal, .close-history-modal, .close-checkout-modal, .close-current-modal, .close-cancel-modal {
+        position: absolute;
+        top: 1.2rem;
+        right: 2rem;
+        font-size: 5rem;
+        color: #333;
+        cursor: pointer;
+        border: none;
+        background: none;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+      }
+
+      p {
+        font-size: 1.8rem;
+      }
+
+      /* -------------------------- */
+      /* CLASSES TO MAKE MODAL WORK */
+      .hidden {
+        display: none;
+      }
+
+      .order-modal, .history-modal, .checkout-modal, .current-modal, .cancel-modal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        background-color: white;
+        padding: 6rem;
+        border-radius: 5px;
+        box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+        z-index: 10;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(3px);
+        z-index: 5;
+      }
+
+      .menu-items {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 80%;
+        margin: auto;
+      }
+
+      .menu-items div {
+        display: flex;
+        flex-direction: row;
+      }
+
+      div input {
+        width: 23rem;
+        height: 4rem;
+        border-radius: 1.5rem;
+        border: 1px solid;
+        padding: auto;
+        text-align: center;
+      }
+
+      .input-field {
+        display: flex;
+        align-items: center;
+        margin: auto;
+        justify-content: center;
+      }
+
+      .history, .current{
+        display: grid;
+        grid-template-columns: auto auto auto;
+      }
+
+      .grid-container{
+        display: flex;
+        flex-direction: column;
+      }
+
+      .table-r{
+        display: flex;
+        justify-content: space-between;
+        align-content: space-evenly;
+      }
+      .table-h{
+        padding: 0rem 3rem;
+      }
+      .table-h:nth-child(2){
+        padding-left: 8.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      Click here Place an order
+      <button id="show-items" class="show-items-modal">1</button> : Place an
+      order
+    </div>
+    <div>
+      <button id="checkout-order" class="show-checkout-modal">99</button>:
+      Checkout order
+    </div>
+    <div>
+      <button id="history" class="show-history-modal">98</button>: Order history
+    </div>
+    <div>
+      <button id="current-order" class="show-current-modal">97</button>: Current
+      order
+    </div>
+    <div>
+      <button id="cancel-order" class="show-cancel-modal">0</button>: Cancel
+      Order
+    </div>
+
+    <div class="order-modal hidden">
+      <button class="close-modal">&times;</button>
+      <h1>Restaurant Menu 😍</h1>
+      <div class="menu-items">
+        <div>
+          <div>1.</div>
+          <div>Ewa</div>
+        </div>
+      </div>
+      <div class="input-field">
+        <input
+          type="text"
+          placeholder="Select a number to place your order"
+          id="order-field"
+        />
+        <button type="submit" class="place-order" id="orderButton">
+          place order
+        </button>
+      </div>
+    </div>
+    <div class="history-modal hidden">
+      <button class="close-history-modal">&times;</button>
+      <h1>Order History 😍</h1>
+        <table>
+          <tr id="table-r">
+            <th class="table-h">item</th>
+            <th class="table-h">price</th>
+          </tr>
+        </table>
+        <div class="history">
+          <div id="items" class="grid-container">
+            <div>item</div>
+            <div>price</div>
+            <div>Status</div>
+          </div>
+          <div id="price" class="grid-container">
+            <div>item</div>
+            <div>price</div>
+          </div>
+            
+        </div>
+    </div>
+    <div class="checkout-modal hidden">
+      <button class="close-checkout-modal">&times;</button>
+      <h1>Checkout Order 😍</h1>
+          <table id="checkout">
+              <tr>
+                <!-- <th>Order id</th> -->
+                <th >item</th>
+                <th >price</th>
+                <th></th>
+                <th class="status table-h" style="display: none;">Status</th>
+              </tr>
+          </table>
+    </div>
+    <div class="current-modal hidden">
+      <button class="close-current-modal">&times;</button>
+      <h1>Current Order 😍</h1>
+      <table>
+        <tr id="table-r">
+          <th class="table-h">item</th>
+          <th class="table-h">price</th>
+        </tr>
+      </table>
+      <div class="current">
+        <div id="current_items" class="grid-container">
+          <div>item</div>
+          <div>price</div>
+          <div>Status</div>
+        </div>
+        <div id="current_price" class="grid-container">
+          <div>item</div>
+          <div>price</div>
+        </div>
+      </div>
+    </div>
+    <div class="cancel-modal hidden">
+      <button class="close-cancel-modal">&times;</button>
+      <h1>Cancel Order 😍</h1>
+      <div class="cancel">
+        <!-- <div>
+          <div>1.</div>
+          <div>Ewa</div>
+        </div> -->
+      </div>
+      <div class="input-field">
+        <input
+          type="text"
+          placeholder="Select a number to place your order"
+          id="order-field"
+        />
+        <button type="submit" class="place-order" id="orderButton">
+          place order
+        </button>
+      </div>
+    </div>
+    <div class="overlay hidden"></div>
+
+    <!-- <script src="script.js"></script> -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+      const orderModal = document.querySelector(".order-modal");
+      const historyModal = document.querySelector(".history-modal");
+      const checkoutModal = document.querySelector(".checkout-modal");
+      const currentModal = document.querySelector(".current-modal");
+      const cancelModal = document.querySelector(".cancel-modal");
+
+      const overlay = document.querySelector(".overlay");
+
+      const btnCloseModal = document.querySelector(".close-modal");
+      const btnCloseHistoryModal = document.querySelector(".close-history-modal");
+      const btnCloseCheckoutModal = document.querySelector(".close-checkout-modal");
+      const btnCloseCurrentModal = document.querySelector(".close-current-modal");
+      const btnCloseCancelModal = document.querySelector(".close-cancel-modal");
+
+      const btnsOpenItemsModal = document.querySelector(".show-items-modal");
+      const btnsOpenCheckoutModal = document.querySelector(".show-checkout-modal");
+      const btnsOpenHistoryModal = document.querySelector(".show-history-modal");
+      const btnsOpenCancelModal = document.querySelector(".show-cancel-modal");
+      const btnsOpenCurrentModal = document.querySelector(".show-current-modal");
+
+      const foodMenuItems = document.querySelector(".menu-items");
+      const placeOrder = document.getElementById("orderButton");
+      const historyItems = document.getElementById("items")
+      const historyPrice = document.getElementById("price")
+      const currentPrice = document.getElementById("current_price")
+      const currentItems = document.getElementById("current_items")
+
+      let order_value = document.getElementById("order-field");
+
+      const openOrderModal = function () {
+        orderModal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+      };
+
+      const closeModal = function () {
+        orderModal.classList.add("hidden");
+        overlay.classList.add("hidden");
+      };
+
+      const openHistoryModal = function () {
+        historyModal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+      };
+
+      const closeHistoryModal = function () {
+        historyModal.classList.add("hidden");
+        overlay.classList.add("hidden");
+      };
+
+      const openCheckoutModal = function () {
+        checkoutModal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+      };
+
+      const closeCheckoutModal = function () {
+        checkoutModal.classList.add("hidden");
+        overlay.classList.add("hidden");
+      };
+
+      const openCurrentModal = function () {
+        currentModal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+      };
+
+      const closeCurrentModal = function () {
+        currentModal.classList.add("hidden");
+        overlay.classList.add("hidden");
+      };
+
+      const openCancelModal = function () {
+        cancelModal.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+      };
+
+      const closeCancelModal = function () {
+        cancelModal.classList.add("hidden");
+        overlay.classList.add("hidden");
+      };
+
+      btnsOpenItemsModal.addEventListener("click", openOrderModal);
+      btnsOpenCheckoutModal.addEventListener("click", openCheckoutModal);
+      btnsOpenHistoryModal.addEventListener("click", openHistoryModal);
+      btnsOpenCurrentModal.addEventListener("click", openCurrentModal);
+      btnsOpenCancelModal.addEventListener("click", openCancelModal);
+
+      btnCloseModal.addEventListener("click", closeModal);
+      btnCloseHistoryModal.addEventListener("click", closeHistoryModal);
+      btnCloseCheckoutModal.addEventListener("click", closeCheckoutModal);
+      btnCloseCurrentModal.addEventListener("click", closeCurrentModal);
+      btnCloseCancelModal.addEventListener("click", closeCancelModal);
+
+      overlay.addEventListener("click", closeModal);
+      overlay.addEventListener("click", closeHistoryModal);
+      overlay.addEventListener("click", closeCheckoutModal);
+      overlay.addEventListener("click", closeCurrentModal);
+      overlay.addEventListener("click", closeCancelModal);
+
+      document.addEventListener("keydown", function (e) {
+        // console.log(e.key);
+
+        if (e.key === "Escape" && !orderModal.classList.contains("hidden")) {
+          closeModal();
+        }
+        if (e.key === "Escape" && !historyModal.classList.contains("hidden")) {
+          closeHistoryModal();
+        }
+        if (e.key === "Escape" && !checkoutModal.classList.contains("hidden")) {
+          closeCheckoutModal();
+        }
+        if (e.key === "Escape" && !currentModal.classList.contains("hidden")) {
+          closeCurrentModal();
+        }
+        if (e.key === "Escape" && !cancelModal.classList.contains("hidden")) {
+          closeCancelModal();
+        }
+      });
+
+      const socket = io("ws://localhost:5500");
+
+      socket.on("connected", function (msg) {
+        console.log(msg);
+      });
+
+      socket.on("order", (data) => {
+        const displayFoodMenu = function (items) {
+          foodMenuItems.innerHTML = "";
+          items.forEach((item, i) => {
+            const html = `
+          <div class="menu-items">
+            <div>
+              <div>${i + 1}</div>.`+ " " +`  <div>${item}</div>
+            </div>
+          </div>`;
+            foodMenuItems.insertAdjacentHTML("beforeend", html);
+          });
+        };
+        displayFoodMenu(data);
+        console.log(data);
+
+        placeOrder.addEventListener("click", function (e) {
+          let inputValue = order_value.value;
+          if (!inputValue) {
+            alert(`Select an option from 1 to ${data.length}`);
+            return;
+          }
+          let foodObj = { ...data };
+          console.log(foodObj);
+          const inputOrder = foodObj[Number(inputValue) - 1];
+          order_value.value = "";
+
+          if (inputOrder === undefined) {
+            alert(
+              `This item is not available on the Menu; Please select option 1 to ${data.length}`
+            );
+            return;
+          }
+
+          socket.emit("order_requested", {
+            orderId: Math.round(Math.random() * 100),
+            orderItem: inputOrder,
+          });
+        });
+
+        socket.on("processing_order", (processed_data) => {
+          const { message, order } = processed_data;
+          alert(message);
+          console.log(processed_data);
+          const checkoutTable = document.getElementById('checkout');
+          const row = checkoutTable.insertRow(-1);
+          let column1 = row.insertCell(0);
+          let column2 = row.insertCell(1);
+          let column3 = row.insertCell(2);
+          let column4 = row.insertCell(3);
+          
+          //column1.innerText = order.orderId;
+          column1.innerText = order.orderItem;
+          column2.innerText = order.itemPrice;
+       
+          const checkoutId = `accept_order_${order.orderItem}`
+          const cancelId = `reject_order_${order.orderItem}`
+          
+              column3.innerHTML = `
+                <div>
+                  <button id="${checkoutId}">Checkout Order</button>
+                  <button id="${cancelId}">Cancel Order</button>
+                </div>`
+                
+            const checkoutBtn = document.getElementById(checkoutId)
+            const cancelBtn = document.getElementById(cancelId)
+            
+
+            checkoutBtn.addEventListener('click', () => {
+              document.querySelector('.status').style.display = 'block'
+                console.log('order Placed')
+                const confirmedOrder = {item: order.orderItem, price: order.itemPrice, status: 'processed'}
+                socket.emit('order_confirmed', {action: 'confirmed order', confirmedOrder} )
+                console.log(confirmedOrder)
+                column4.innerText = 'Order Confirmed' 
+
+                console.log(`Your Order of ${order.orderItem} is suceesfully recieved`)
+            })
+
+            cancelBtn.addEventListener('click', () => {
+              document.querySelector('.status').style.display = 'block'
+                console.log('order Placed')
+                socket.emit('order_cancelled', order )
+                column4.innerText = 'Order Cancelled' 
+                console.log(`Your Order of ${order.orderItem} is suceesfully cancelled`)
+            })
+        });
+      });
+
+      socket.on('order_history', (data) => {
+        console.log(data)
+        var itemArr = [];
+        var priceArr = [];
+          for (var i = 0; i < data.length; i++) {
+            itemArr.push(data[i].item);
+          }
+          for (var i = 0; i < data.length; i++) {
+            priceArr.push(data[i].price);
+          }
+          historyItems.innerHTML = ""
+          itemArr.forEach((item, i) => {
+            const itemsHtml = `
+              <div id="items" class="grid-container">
+                <div><span>${i + 1}</span>.` +" " +`${item}</div>
+              </div>
+              `
+              historyItems.insertAdjacentHTML("beforeend", itemsHtml)
+          })
+
+          historyPrice.innerHTML = ""
+          priceArr.forEach((price) => {
+            const priceHtml = `
+              <div id="items" class="grid-container">
+                <div>${price}</div>
+              </div>`
+              historyPrice.insertAdjacentHTML("beforeend", priceHtml)
+          })
+          console.log(itemArr)
+          console.log(priceArr)
+        })
+
+        socket.on('current_order', (data) => {
+          currentItems.innerHTML = "";
+
+          const currentItemsHtml =  `
+              <div id="items" class="grid-container">
+                <div>${data.item}</div>
+              </div>`
+
+          currentItems.insertAdjacentHTML('beforeend', currentItemsHtml)
+
+          currentPrice.innerHTML = "";
+
+          const currentPriceHtml =  `
+              <div id="items" class="grid-container">
+                <div>${data.price}</div>
+              </div>`
+
+          currentPrice.insertAdjacentHTML('beforeend', currentPriceHtml)    
+        })
+    </script>
+  </body>
+</html>
