@@ -1,4 +1,4 @@
-const socket = io("ws://ye-restaurant-chatbot.onrender.com");
+const socket = io("ws://ye-restaurant-chatbot.onrender");
 
 socket.on("connected", function (msg) {
   console.log(msg);
