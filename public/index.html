@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1> Welcome to YE Restaurant Chatchord</h1>
+    <p style="font-size: 3rem;"> Please Click on the buttons to place and process your order</p>
+    <div>
+      
+      <button id="show-items" class="show-items-modal">1</button> : Place an
+      order
+    </div>
+    <div>
+      <button id="checkout-order" class="show-checkout-modal">99</button>:
+      Checkout order
+    </div>
+    <div>
+      <button id="history" class="show-history-modal">98</button>: Order history
+    </div>
+    <div>
+      <button id="current-order" class="show-current-modal">97</button>: Current
+      order
+    </div>
+    <div>
+      <button id="cancel-order" class="show-cancel-modal">0</button>: Cancel
+      Order
+    </div>
+
+    <div class="order-modal hidden">
+      <button class="close-modal">&times;</button>
+      <h1>Restaurant Menu 😍</h1>
+      <div class="menu-items">
+        <div>
+          <div>1.</div>
+          <div>Ewa</div>
+        </div>
+      </div>
+      <div class="input-field">
+        <input
+          type="text"
+          placeholder="Select a number to place your order"
+          id="order-field"
+        />
+        <button type="submit" class="place-order" id="orderButton">
+          place order
+        </button>
+      </div>
+    </div>
+    <div class="history-modal hidden">
+      <button class="close-history-modal">&times;</button>
+      <h1>Order History 😍</h1>
+        <table>
+          <tr id="table-r">
+            <th class="table-h">item</th>
+            <th class="table-h">price</th>
+          </tr>
+        </table>
+        <div class="history">
+          <div id="items" class="grid-container">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div id="price" class="grid-container">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+    </div>
+    <div class="checkout-modal hidden">
+      <button class="close-checkout-modal">&times;</button>
+      <h1>Checkout Order 😍</h1>
+          <table id="checkout">
+              <tr>
+                <!-- <th>Order id</th> -->
+                <th >item</th>
+                <th >price</th>
+                <th></th>
+                <th class="status table-h" style="display: none;">Status</th>
+              </tr>
+          </table>
+    </div>
+    <div class="current-modal hidden">
+      <button class="close-current-modal">&times;</button>
+      <h1>Current Order 😍</h1>
+      <table>
+        <tr id="table-r">
+          <th class="table-h">item</th>
+          <th class="table-h">price</th>
+        </tr>
+      </table>
+      <div class="current">
+        <div id="current_items" class="grid-container">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div id="current_price" class="grid-container">
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cancel-modal hidden">
+      <button class="close-cancel-modal">&times;</button>
+      <h1>Cancel Order 😍</h1>
+      <div class="cancel">
+        <table id="cancel">
+          <tr>
+            <!-- <th>Order id</th> -->
+            <th >item</th>
+            <th >price</th>
+            <th></th>
+            <th class="status table-h" style="display: none;">Status</th>
+          </tr>
+      </table>
+      </div>
+    </div>
+    <div class="overlay hidden"></div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
