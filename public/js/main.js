@@ -1,4 +1,4 @@
-const socket = io("ws://localhost:5500");
+const socket = io("ws://localhost:4000");
 
 socket.on("connected", function (msg) {
   console.log(msg);
