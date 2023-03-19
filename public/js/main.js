@@ -1,9 +1,10 @@
-const socket = io('https://ye-restaurant-chatbot.onrender.com/');
+const socket = io("https://ye-restaurant-chatbot.onrender.com/");
 
 socket.on("connected", function (msg) {
   console.log(msg);
 });
 
+// In memory Current orders
 const orders = [];
 
 const orderModal = document.querySelector(".order-modal");
@@ -139,6 +140,7 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
+// Receive restuarant menu from backend and display to frontend
 socket.on("order", (data) => {
   const displayFoodMenu = function (items) {
     foodMenuItems.innerHTML = "";
@@ -158,6 +160,7 @@ socket.on("order", (data) => {
   displayFoodMenu(data);
   console.log(data);
 
+  // place Order function
   placeOrder.addEventListener("click", function (e) {
     let inputValue = order_value.value;
     if (!inputValue) {
@@ -175,12 +178,14 @@ socket.on("order", (data) => {
       return;
     }
 
+    // Send requested order to backend
     socket.emit("order_requested", {
       orderItem: inputOrder,
     });
   });
 });
 
+// Receive Order and display in checkout checkout 
 socket.on("processing_order", (processed_data) => {
   const { message, order } = processed_data;
   alert(message);
@@ -238,7 +243,7 @@ socket.on("processing_order", (processed_data) => {
   });
 });
 
-
+// Receive order history from backend
 socket.on("order_history", (data) => {
   console.log(data);
   var itemArr = [];
@@ -274,6 +279,7 @@ socket.on("order_history", (data) => {
   console.log(priceArr);
 });
 
+//Current order from Backend
 socket.on("current_order", (data) => {
   currentItems.innerHTML = "";
 
